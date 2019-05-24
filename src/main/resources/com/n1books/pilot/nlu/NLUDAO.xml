@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper      
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.n1books.pilot.nlu.NLUDAO">
+	<select id="getIT" resultType="SentimentVO">
+		select name, price, trade, per,
+		pbr, forein, date, issue, recom, @Rank :=
+		@Rank +1 as rank
+		from it,
+		(select @Rank := 0) r
+		where date = #{now}
+		order by recom desc
+	</select>
+
+	<select id="getBIO" resultType="SentimentVO">
+		select name, price, trade, per,
+		pbr, forein, date, issue, recom, @Rank :=
+		@Rank +1 as rank
+		from bio,
+		(select @Rank := 0) r
+		where date = #{now}
+		order by recom desc
+	</select>
+
+	<select id="getEDU" resultType="SentimentVO">
+		select name, price, trade, per,
+		pbr, forein, date, issue, recom, @Rank :=
+		@Rank +1 as rank
+		from edu,
+		(select @Rank := 0) r
+		where date = #{now}
+		order by recom desc
+	</select>
+
+	<select id="getFLEX" resultType="SentimentVO">
+		select name, price, trade, per,
+		pbr, forein, date, issue, recom, @Rank :=
+		@Rank +1 as rank
+		from flex,
+		(select @Rank := 0) r
+		where date = #{now}
+		order by recom desc
+	</select>
+
+	<select id="getELB" resultType="SentimentVO">
+		select name, price, trade, per,
+		pbr, forein, date, issue, recom, @Rank :=
+		@Rank +1 as rank
+		from elb,
+		(select @Rank := 0) r
+		where date = #{now}
+		order by recom desc
+	</select>
+
+	<select id="getANAL_IT" resultType="SentimentVO">
+		select name, price, yst, updn, trade, forein, date,
+		case
+		when substring(updn,1,1) = '-' then 1
+		when substring(updn,1,1) = '+' then 2
+		else 3
+		end updn2
+		from it
+		where name = #{name}
+		order by date desc limit 7
+	</select>
+
+	<select id="getANAL_BIO" resultType="SentimentVO">
+		select name, price, yst, updn, trade, forein, date,
+		case
+		when substring(updn,1,1) = '-' then 1
+		when substring(updn,1,1) = '+' then 2
+		else 3
+		end updn2
+		from bio
+		where name = #{name}
+		order by date
+		desc limit 7
+	</select>
+
+	<select id="getANAL_EDU" resultType="SentimentVO">
+		select name, price, yst, updn, trade, forein, date,
+		case
+		when substring(updn,1,1) = '-' then 1
+		when substring(updn,1,1) = '+' then 2
+		else 3
+		end updn2
+		from edu
+		where name = #{name}
+		order by date
+		desc limit 7
+	</select>
+
+	<select id="getANAL_FLEX" resultType="SentimentVO">
+		select name, price, yst, updn, trade, forein, date,
+		case
+		when substring(updn,1,1) = '-' then 1
+		when substring(updn,1,1) = '+' then 2
+		else 3
+		end updn2
+		from flex
+		where name = #{name}
+		order by date
+		desc limit 7
+	</select>
+
+	<select id="getANAL_ELB" resultType="SentimentVO">
+		select name, price, yst, updn, trade, forein, date,
+		case
+		when substring(updn,1,1) = '-' then 1
+		when substring(updn,1,1) = '+' then 2
+		else 3
+		end updn2
+		from elb
+		where name = #{name}
+		order by date
+		desc limit 7
+	</select>
+	<select id="getGRAPH_IT" resultType="SentimentVO">
+		select name, date, start,
+		end, high, low
+		from it_graph
+		where name = #{name}
+		order by date desc limit 7
+	</select>
+
+	<select id="getGRAPH_BIO" resultType="SentimentVO">
+		select name, date, start,
+		end, high, low
+		from bio_graph
+		where name = #{name}
+		order by date desc limit 7
+	</select>
+
+	<select id="getGRAPH_EDU" resultType="SentimentVO">
+		select name, date, start,
+		end, high, low
+		from edu_graph
+		where name = #{name}
+		order by date desc limit 7
+	</select>
+
+	<select id="getGRAPH_FLEX" resultType="SentimentVO">
+		select name, date, start,
+		end, high, low
+		from flex_graph
+		where name = #{name}
+		order by date desc limit 7
+	</select>
+
+	<select id="getGRAPH_ELB" resultType="SentimentVO">
+		select name, date, start,
+		end, high, low
+		from elb_graph
+		where name = #{name}
+		order by date desc limit 7
+	</select>
+
+</mapper>
